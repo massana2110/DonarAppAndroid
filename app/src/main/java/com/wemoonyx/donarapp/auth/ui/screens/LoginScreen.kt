@@ -1,4 +1,4 @@
-package com.wemoonyx.donarapp.ui.screens
+package com.wemoonyx.donarapp.auth.ui.screens
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -48,44 +48,44 @@ import com.wemoonyx.donarapp.ui.theme.interFontFamily
 
 @Composable
 fun LoginScreen() {
-    LoginHeader()
-}
-
-@Composable
-fun LoginHeader() {
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = 32.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Image(painter = painterResource(id = R.drawable.ic_donar_app), contentDescription = "Logo")
-        Text(
-            text = "Bienvenido a DonarApp",
-            fontFamily = interFontFamily,
-            fontWeight = FontWeight.Bold,
-            fontSize = 24.sp,
-            color = BluePrimary,
-            lineHeight = 29.sp,
-            modifier = Modifier.padding(top = 16.dp)
-        )
-        Text(
-            text = "Crea una cuenta o inicia sesión para convertirte \n" +
-                    "en un agente de cambio ",
-            fontFamily = interFontFamily,
-            fontWeight = FontWeight.Normal,
-            fontSize = 14.sp,
-            color = GrayPrimary,
-            textAlign = TextAlign.Center,
-            lineHeight = 16.sp,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 20.dp, end = 20.dp, top = 8.dp)
-        )
-        LoginSocialButtons()
+        LoginHeader()
         LoginDivider()
         LoginForm()
     }
+}
+
+@Composable
+fun LoginHeader() {
+    Image(painter = painterResource(id = R.drawable.ic_donar_app), contentDescription = "Logo")
+    Text(
+        text = "Bienvenido a DonarApp",
+        fontFamily = interFontFamily,
+        fontWeight = FontWeight.Bold,
+        fontSize = 24.sp,
+        color = BluePrimary,
+        lineHeight = 29.sp,
+        modifier = Modifier.padding(top = 16.dp)
+    )
+    Text(
+        text = "Crea una cuenta o inicia sesión para convertirte \n" +
+                "en un agente de cambio ",
+        fontFamily = interFontFamily,
+        fontWeight = FontWeight.Normal,
+        fontSize = 14.sp,
+        color = GrayPrimary,
+        textAlign = TextAlign.Center,
+        lineHeight = 16.sp,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(start = 20.dp, end = 20.dp, top = 8.dp)
+    )
+    LoginSocialButtons()
 }
 
 @Composable
@@ -198,7 +198,12 @@ fun LoginForm() {
                 .padding(top = 16.dp),
             horizontalArrangement = Arrangement.Center
         ) {
-            Text(text = "¿No tienes cuenta?", fontSize = 14.sp, color = GrayPrimary, fontFamily = interFontFamily)
+            Text(
+                text = "¿No tienes cuenta?",
+                fontSize = 14.sp,
+                color = GrayPrimary,
+                fontFamily = interFontFamily
+            )
             Text(
                 text = "Crear cuenta",
                 modifier = Modifier.padding(horizontal = 8.dp),
