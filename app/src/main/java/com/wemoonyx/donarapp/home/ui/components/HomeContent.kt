@@ -4,6 +4,8 @@ import androidx.annotation.DrawableRes
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,7 +16,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
@@ -36,6 +40,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.wemoonyx.donarapp.R
+import com.wemoonyx.donarapp.ui.theme.BluePrimary
 import com.wemoonyx.donarapp.ui.theme.BlueTertiary
 import com.wemoonyx.donarapp.ui.theme.YellowPrimary
 import com.wemoonyx.donarapp.ui.theme.interFontFamily
@@ -47,6 +52,11 @@ data class BannerItem(
     val quantity: Int,
     val title: String,
     val description: String
+)
+
+data class CategoryItem(
+    @DrawableRes val icon: Int,
+    val name: String
 )
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -73,6 +83,15 @@ fun HomeContent(modifier: Modifier) {
         ),
     )
 
+    val categoryItems = listOf(
+        CategoryItem(R.drawable.ic_dog, "Animalistas"),
+        CategoryItem(R.drawable.ic_person, "Humanitarias"),
+        CategoryItem(R.drawable.ic_plant, "Ambientales"),
+        CategoryItem(R.drawable.ic_health, "Salud"),
+        CategoryItem(R.drawable.ic_education, "Educación"),
+        CategoryItem(R.drawable.ic_adult, "Adulto mayor"),
+    )
+
     val pagerState = rememberPagerState(pageCount = { bannerItems.size })
 
     LaunchedEffect(Unit) {
@@ -86,7 +105,7 @@ fun HomeContent(modifier: Modifier) {
     }
     Column {
         HomeBanner(modifier, bannerItems = bannerItems, pagerState = pagerState)
-        HomeCategories()
+        HomeCategories(categoryItems)
     }
 }
 
@@ -172,23 +191,53 @@ fun HorizontalPagerIndicator(pagerState: PagerState, modifier: Modifier) {
 }
 
 @Composable
-fun HomeCategories() {
-    Column (modifier = Modifier
-        .fillMaxWidth()
-        .padding(horizontal = 16.dp)) {
+fun HomeCategories(categoryItems: List<CategoryItem>) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp)
+    ) {
         Text(
             text = "Dona por categoría",
             fontFamily = interFontFamily,
             fontWeight = FontWeight.Bold,
             fontSize = 16.sp
         )
-        LazyRow {
-
+        LazyRow(modifier = Modifier.padding(top = 16.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            items(categoryItems) {
+                ItemCategory(categoryItem = it)
+            }
         }
     }
 }
 
-@Preview(showSystemUi = true)
+@Composable
+fun ItemCategory(categoryItem: CategoryItem) {
+    Column(
+        modifier = Modifier
+            .width(88.dp)
+            .clip(RoundedCornerShape(8.dp))
+            .border(1.dp, BluePrimary, RoundedCornerShape(8.dp))
+            .background(Color.White)
+            .clickable { /* TODO */ },
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Image(
+            modifier = Modifier.size(32.dp).padding(top = 12.dp),
+            painter = painterResource(id = categoryItem.icon),
+            contentDescription = categoryItem.name,
+        )
+
+        Text(
+            text = categoryItem.name,
+            modifier = Modifier.padding(start = 8.dp, end = 8.dp, bottom = 12.dp),
+            fontSize = 12.sp,
+            color = BluePrimary
+        )
+    }
+}
+
+@Preview(showSystemUi = true, device = "id:pixel_6")
 @Composable
 private fun HomeContentPreview() {
     Surface {
