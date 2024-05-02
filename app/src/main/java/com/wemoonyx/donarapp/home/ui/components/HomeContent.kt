@@ -24,7 +24,11 @@ import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -41,7 +45,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.wemoonyx.donarapp.R
 import com.wemoonyx.donarapp.ui.theme.BluePrimary
+import com.wemoonyx.donarapp.ui.theme.BlueSecondary
 import com.wemoonyx.donarapp.ui.theme.BlueTertiary
+import com.wemoonyx.donarapp.ui.theme.GrayPrimary
+import com.wemoonyx.donarapp.ui.theme.GrayTertiary
 import com.wemoonyx.donarapp.ui.theme.YellowPrimary
 import com.wemoonyx.donarapp.ui.theme.interFontFamily
 import kotlinx.coroutines.delay
@@ -57,6 +64,17 @@ data class BannerItem(
 data class CategoryItem(
     @DrawableRes val icon: Int,
     val name: String
+)
+
+data class ProjectItem(
+    @DrawableRes val image: Int,
+    val badgeName: String,
+    val title: String,
+    val description: String,
+    val moneyReached: Int,
+    val moneyGoal: Int,
+    val percentReached: Int,
+    val contributors: Int,
 )
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -92,6 +110,39 @@ fun HomeContent(modifier: Modifier) {
         CategoryItem(R.drawable.ic_adult, "Adulto mayor"),
     )
 
+    val projectItems = listOf(
+        ProjectItem(
+            image = R.drawable.education_image,
+            badgeName = "Educación",
+            title = "Educo",
+            description = "Ayudanos a realizar mejoras en las infraestructuras de escuelas del país.",
+            moneyReached = 700,
+            moneyGoal = 1200,
+            percentReached = 58,
+            contributors = 3217
+        ),
+        ProjectItem(
+            image = R.drawable.medical_image,
+            badgeName = "Salud",
+            title = "Fusal",
+            description = "Ayudanos a dar un mejor servicio medico a la población del país.",
+            moneyReached = 1258,
+            moneyGoal = 3500,
+            percentReached = 36,
+            contributors = 3854
+        ),
+        ProjectItem(
+            image = R.drawable.medical_image,
+            badgeName = "Adulto mayor",
+            title = "Fusate",
+            description = "Buscamos brindar 100 terapias físicas a adultos mayores. ",
+            moneyReached = 3250,
+            moneyGoal = 3800,
+            percentReached = 86,
+            contributors = 4210
+        ),
+    )
+
     val pagerState = rememberPagerState(pageCount = { bannerItems.size })
 
     LaunchedEffect(Unit) {
@@ -106,6 +157,7 @@ fun HomeContent(modifier: Modifier) {
     Column {
         HomeBanner(modifier, bannerItems = bannerItems, pagerState = pagerState)
         HomeCategories(categoryItems)
+        HomeProjects(modifier, projectItems)
     }
 }
 
@@ -150,6 +202,7 @@ fun HomeBanner(modifier: Modifier, bannerItems: List<BannerItem>, pagerState: Pa
                                 fontFamily = interFontFamily,
                                 fontWeight = FontWeight.Bold,
                                 color = Color.White,
+                                lineHeight = 16.sp,
                                 modifier = Modifier.padding(start = 4.dp)
                             )
                         }
@@ -158,6 +211,7 @@ fun HomeBanner(modifier: Modifier, bannerItems: List<BannerItem>, pagerState: Pa
                             fontFamily = interFontFamily,
                             fontWeight = FontWeight.Normal,
                             color = Color.White,
+                            lineHeight = 13.sp,
                             fontSize = 10.sp
                         )
                     }
@@ -203,7 +257,10 @@ fun HomeCategories(categoryItems: List<CategoryItem>) {
             fontWeight = FontWeight.Bold,
             fontSize = 16.sp
         )
-        LazyRow(modifier = Modifier.padding(top = 16.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+        LazyRow(
+            modifier = Modifier.padding(top = 16.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
             items(categoryItems) {
                 ItemCategory(categoryItem = it)
             }
@@ -215,7 +272,7 @@ fun HomeCategories(categoryItems: List<CategoryItem>) {
 fun ItemCategory(categoryItem: CategoryItem) {
     Column(
         modifier = Modifier
-            .width(88.dp)
+            .width(90.dp)
             .clip(RoundedCornerShape(8.dp))
             .border(1.dp, BluePrimary, RoundedCornerShape(8.dp))
             .background(Color.White)
@@ -223,17 +280,165 @@ fun ItemCategory(categoryItem: CategoryItem) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Image(
-            modifier = Modifier.size(32.dp).padding(top = 12.dp),
+            modifier = Modifier
+                .size(32.dp)
+                .padding(top = 12.dp),
             painter = painterResource(id = categoryItem.icon),
             contentDescription = categoryItem.name,
         )
 
         Text(
             text = categoryItem.name,
-            modifier = Modifier.padding(start = 8.dp, end = 8.dp, bottom = 12.dp),
-            fontSize = 12.sp,
+            modifier = Modifier.padding(start = 8.dp, top = 2.dp, end = 8.dp, bottom = 12.dp),
+            fontSize = 11.sp,
+            fontFamily = interFontFamily,
+            fontWeight = FontWeight.Normal,
             color = BluePrimary
         )
+    }
+}
+
+@Composable
+fun HomeProjects(modifier: Modifier, projectItems: List<ProjectItem>) {
+    Column(modifier = modifier) {
+        Row(
+            Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = "Proyectos urgentes",
+                fontFamily = interFontFamily,
+                fontWeight = FontWeight.Bold,
+                fontSize = 16.sp
+            )
+
+            Text(
+                text = "Ver todo",
+                fontFamily = interFontFamily,
+                fontWeight = FontWeight.Normal,
+                fontSize = 12.sp,
+                color = BluePrimary
+            )
+        }
+
+        LazyRow(
+            modifier = Modifier.padding(top = 16.dp),
+            horizontalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            items(projectItems) {
+                ItemProject(it)
+            }
+        }
+    }
+}
+
+@Composable
+fun ItemProject(projectItem: ProjectItem) {
+    Card(
+        shape = RoundedCornerShape(8.dp),
+        modifier = Modifier.width(235.dp),
+        colors = CardDefaults.cardColors(containerColor = Color.White),
+        elevation = CardDefaults.cardElevation(defaultElevation = 3.dp)
+    ) {
+        Box(Modifier.fillMaxWidth()) {
+            Image(
+                painter = painterResource(id = projectItem.image),
+                contentDescription = projectItem.title,
+                Modifier.fillMaxWidth(),
+                contentScale = ContentScale.Crop
+            )
+            Box(
+                modifier = Modifier
+                    .padding(top = 8.dp)
+                    .clip(RoundedCornerShape(4.dp))
+                    .background(
+                        BlueSecondary
+                    ),
+            ) {
+                Text(
+                    text = projectItem.badgeName,
+                    modifier = Modifier.padding(2.dp),
+                    color = BluePrimary,
+                    fontFamily = interFontFamily,
+                    fontWeight = FontWeight.Normal,
+                    fontSize = 12.sp,
+                )
+            }
+        }
+        Text(
+            text = projectItem.title,
+            modifier = Modifier.padding(top = 4.dp, start = 4.dp),
+            fontFamily = interFontFamily,
+            fontWeight = FontWeight.Bold,
+        )
+        Text(
+            text = projectItem.description,
+            modifier = Modifier.padding(top = 4.dp, start = 4.dp, end = 4.dp),
+            fontFamily = interFontFamily,
+            fontWeight = FontWeight.Normal,
+            lineHeight = 14.sp,
+            fontSize = 12.sp,
+        )
+
+        Row(
+            Modifier
+                .fillMaxWidth()
+                .padding(start = 4.dp, end = 4.dp, top = 12.dp, bottom = 4.dp),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Row {
+                Text(
+                    text = "$${projectItem.moneyReached}/",
+                    fontFamily = interFontFamily,
+                    fontWeight = FontWeight.ExtraBold,
+                    fontSize = 12.sp,
+                )
+                Text(
+                    text = "$${projectItem.moneyGoal}",
+                    modifier = Modifier.padding(start = 2.dp),
+                    fontFamily = interFontFamily,
+                    fontWeight = FontWeight.ExtraBold,
+                    fontSize = 12.sp,
+                    color = GrayTertiary
+                )
+            }
+
+            Text(text = "${projectItem.percentReached}%")
+        }
+
+        LinearProgressIndicator(
+            progress = { projectItem.percentReached.toFloat() / 100 },
+            color = BluePrimary,
+            modifier = Modifier
+                .padding(horizontal = 4.dp)
+                .clip(RoundedCornerShape(4.dp))
+        )
+
+        Text(
+            text = "${projectItem.contributors} contribuciones",
+            fontFamily = interFontFamily,
+            fontWeight = FontWeight.Medium,
+            fontSize = 12.sp,
+            modifier = Modifier.padding(4.dp)
+        )
+
+        Button(
+            onClick = { /*TODO*/ }, modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 8.dp, horizontal = 24.dp),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = YellowPrimary,
+                contentColor = GrayPrimary
+            ),
+            shape = RoundedCornerShape(8.dp)
+        ) {
+            Text(
+                text = "Donar ahora", fontFamily = interFontFamily,
+                fontWeight = FontWeight.ExtraBold,
+                fontSize = 12.sp,
+            )
+        }
     }
 }
 
