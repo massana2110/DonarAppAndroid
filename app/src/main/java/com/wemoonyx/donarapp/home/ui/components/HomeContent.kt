@@ -1,6 +1,7 @@
 package com.wemoonyx.donarapp.home.ui.components
 
 import androidx.annotation.DrawableRes
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -29,6 +30,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.LinearProgressIndicator
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -158,6 +160,7 @@ fun HomeContent(modifier: Modifier) {
         HomeBanner(modifier, bannerItems = bannerItems, pagerState = pagerState)
         HomeCategories(categoryItems)
         HomeProjects(modifier, projectItems)
+        HomeInvites(modifier)
     }
 }
 
@@ -384,7 +387,7 @@ fun ItemProject(projectItem: ProjectItem) {
         Row(
             Modifier
                 .fillMaxWidth()
-                .padding(start = 4.dp, end = 4.dp, top = 12.dp, bottom = 4.dp),
+                .padding(start = 8.dp, end = 8.dp, top = 12.dp, bottom = 4.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Row {
@@ -411,7 +414,7 @@ fun ItemProject(projectItem: ProjectItem) {
             progress = { projectItem.percentReached.toFloat() / 100 },
             color = BluePrimary,
             modifier = Modifier
-                .padding(horizontal = 4.dp)
+                .padding(horizontal = 8.dp)
                 .clip(RoundedCornerShape(4.dp))
         )
 
@@ -420,13 +423,13 @@ fun ItemProject(projectItem: ProjectItem) {
             fontFamily = interFontFamily,
             fontWeight = FontWeight.Medium,
             fontSize = 12.sp,
-            modifier = Modifier.padding(4.dp)
+            modifier = Modifier.padding(8.dp)
         )
 
         Button(
             onClick = { /*TODO*/ }, modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = 8.dp, horizontal = 24.dp),
+                .padding(vertical = 8.dp, horizontal = 32.dp),
             colors = ButtonDefaults.buttonColors(
                 containerColor = YellowPrimary,
                 contentColor = GrayPrimary
@@ -438,6 +441,55 @@ fun ItemProject(projectItem: ProjectItem) {
                 fontWeight = FontWeight.ExtraBold,
                 fontSize = 12.sp,
             )
+        }
+    }
+}
+
+@Composable
+fun HomeInvites(modifier: Modifier) {
+    Row(
+        modifier = modifier
+            .clip(RoundedCornerShape(10.dp))
+            .background(BlueTertiary),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Image(
+            modifier = Modifier
+                .width(175.dp)
+                .height(100.dp)
+                .padding(horizontal = 8.dp),
+            painter = painterResource(id = R.drawable.friends_invite_illustration),
+            contentDescription = ""
+        )
+
+        Column(
+            modifier = Modifier.padding(vertical = 16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = "Invita a tus amigos",
+                modifier = Modifier.fillMaxWidth(),
+                fontFamily = interFontFamily,
+                fontWeight = FontWeight.ExtraBold,
+                fontSize = 16.sp,
+            )
+            Text(
+                text = "Y conviertanse en agentes de cambio para un mejor El Salvador",
+                fontFamily = interFontFamily,
+                fontWeight = FontWeight.Normal,
+                modifier = Modifier.padding(end = 16.dp, top = 2.dp)
+            )
+            OutlinedButton(
+                onClick = { /*TODO*/ },
+                shape = RoundedCornerShape(8.dp),
+                border = BorderStroke(1.dp, BluePrimary),
+                colors = ButtonDefaults.outlinedButtonColors(
+                    containerColor = Color.White,
+                )
+            ) {
+                Text(text = "Ver más", color = BluePrimary)
+            }
         }
     }
 }
