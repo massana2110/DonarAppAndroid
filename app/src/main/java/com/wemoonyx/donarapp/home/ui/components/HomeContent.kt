@@ -23,8 +23,10 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -146,6 +148,7 @@ fun HomeContent(modifier: Modifier) {
     )
 
     val pagerState = rememberPagerState(pageCount = { bannerItems.size })
+    val scrollState = rememberScrollState()
 
     LaunchedEffect(Unit) {
         while (true) {
@@ -156,7 +159,7 @@ fun HomeContent(modifier: Modifier) {
             )
         }
     }
-    Column {
+    Column(modifier = Modifier.verticalScroll(scrollState)) {
         HomeBanner(modifier, bannerItems = bannerItems, pagerState = pagerState)
         HomeCategories(categoryItems)
         HomeProjects(modifier, projectItems)
@@ -243,7 +246,6 @@ fun HorizontalPagerIndicator(pagerState: PagerState, modifier: Modifier) {
                     .size(12.dp)
             )
         }
-
     }
 }
 
@@ -478,6 +480,7 @@ fun HomeInvites(modifier: Modifier) {
                 text = "Y conviertanse en agentes de cambio para un mejor El Salvador",
                 fontFamily = interFontFamily,
                 fontWeight = FontWeight.Normal,
+                lineHeight = 14.sp,
                 modifier = Modifier.padding(end = 16.dp, top = 2.dp)
             )
             OutlinedButton(
