@@ -44,7 +44,7 @@ data class OnboardingItem(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun OnboardingScreen() {
-    var onBoardingItems = listOf(
+    val onBoardingItems = listOf(
         OnboardingItem(
             title = "Encuentra tu causa",
             description = "Puedes seleccionar entre 50 ONGs dirigidas a diferentes causas en un solo lugar.",

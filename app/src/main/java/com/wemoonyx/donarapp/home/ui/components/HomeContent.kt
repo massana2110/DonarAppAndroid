@@ -31,7 +31,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -48,11 +47,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.wemoonyx.donarapp.R
+import com.wemoonyx.donarapp.main.ui.components.DonarBadge
+import com.wemoonyx.donarapp.main.ui.components.DonationProgressIndicator
 import com.wemoonyx.donarapp.ui.theme.BluePrimary
-import com.wemoonyx.donarapp.ui.theme.BlueSecondary
 import com.wemoonyx.donarapp.ui.theme.BlueTertiary
 import com.wemoonyx.donarapp.ui.theme.GrayPrimary
-import com.wemoonyx.donarapp.ui.theme.GrayTertiary
 import com.wemoonyx.donarapp.ui.theme.YellowPrimary
 import com.wemoonyx.donarapp.ui.theme.interFontFamily
 import kotlinx.coroutines.delay
@@ -353,23 +352,10 @@ fun ItemProject(projectItem: ProjectItem) {
                 Modifier.fillMaxWidth(),
                 contentScale = ContentScale.Crop
             )
-            Box(
-                modifier = Modifier
-                    .padding(top = 8.dp)
-                    .clip(RoundedCornerShape(4.dp))
-                    .background(
-                        BlueSecondary
-                    ),
-            ) {
-                Text(
-                    text = projectItem.badgeName,
-                    modifier = Modifier.padding(2.dp),
-                    color = BluePrimary,
-                    fontFamily = interFontFamily,
-                    fontWeight = FontWeight.Normal,
-                    fontSize = 12.sp,
-                )
-            }
+            DonarBadge(
+                text = projectItem.badgeName,
+                modifier = Modifier.padding(top = 8.dp)
+            )
         }
         Text(
             text = projectItem.title,
@@ -386,38 +372,12 @@ fun ItemProject(projectItem: ProjectItem) {
             fontSize = 12.sp,
         )
 
-        Row(
-            Modifier
-                .fillMaxWidth()
-                .padding(start = 8.dp, end = 8.dp, top = 12.dp, bottom = 4.dp),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Row {
-                Text(
-                    text = "$${projectItem.moneyReached}/",
-                    fontFamily = interFontFamily,
-                    fontWeight = FontWeight.ExtraBold,
-                    fontSize = 12.sp,
-                )
-                Text(
-                    text = "$${projectItem.moneyGoal}",
-                    modifier = Modifier.padding(start = 2.dp),
-                    fontFamily = interFontFamily,
-                    fontWeight = FontWeight.ExtraBold,
-                    fontSize = 12.sp,
-                    color = GrayTertiary
-                )
-            }
-
-            Text(text = "${projectItem.percentReached}%")
-        }
-
-        LinearProgressIndicator(
-            progress = { projectItem.percentReached.toFloat() / 100 },
-            color = BluePrimary,
-            modifier = Modifier
-                .padding(horizontal = 8.dp)
-                .clip(RoundedCornerShape(4.dp))
+        DonationProgressIndicator(
+            modifier = Modifier.fillMaxWidth(),
+            donationReached = projectItem.moneyReached,
+            donationGoal = projectItem.moneyGoal,
+            percentReached = projectItem.percentReached,
+            colorLinearIndicator = BluePrimary
         )
 
         Text(
