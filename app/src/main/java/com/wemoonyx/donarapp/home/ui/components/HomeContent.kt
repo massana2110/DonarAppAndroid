@@ -10,6 +10,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
@@ -328,6 +329,7 @@ fun HomeProjects(modifier: Modifier, projectItems: List<ProjectItem>) {
 
         LazyRow(
             modifier = Modifier.padding(top = 16.dp),
+            contentPadding = PaddingValues(horizontal = 4.dp),
             horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             items(projectItems) {
@@ -359,7 +361,7 @@ fun ItemProject(projectItem: ProjectItem) {
         }
         Text(
             text = projectItem.title,
-            modifier = Modifier.padding(top = 4.dp, start = 4.dp),
+            modifier = Modifier.padding(top = 8.dp, start = 4.dp),
             fontFamily = interFontFamily,
             fontWeight = FontWeight.Bold,
         )
@@ -373,7 +375,7 @@ fun ItemProject(projectItem: ProjectItem) {
         )
 
         DonationProgressIndicator(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp, vertical = 8.dp),
             donationReached = projectItem.moneyReached,
             donationGoal = projectItem.moneyGoal,
             percentReached = projectItem.percentReached,
@@ -385,7 +387,7 @@ fun ItemProject(projectItem: ProjectItem) {
             fontFamily = interFontFamily,
             fontWeight = FontWeight.Medium,
             fontSize = 12.sp,
-            modifier = Modifier.padding(8.dp)
+            modifier = Modifier.padding(horizontal = 8.dp)
         )
 
         Button(
@@ -440,7 +442,7 @@ fun HomeInvites(modifier: Modifier) {
                 text = "Y conviertanse en agentes de cambio para un mejor El Salvador",
                 fontFamily = interFontFamily,
                 fontWeight = FontWeight.Normal,
-                lineHeight = 14.sp,
+                lineHeight = 16.sp,
                 modifier = Modifier.padding(end = 16.dp, top = 2.dp)
             )
             OutlinedButton(

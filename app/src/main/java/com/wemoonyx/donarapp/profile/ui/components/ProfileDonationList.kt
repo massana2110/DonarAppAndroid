@@ -52,7 +52,7 @@ fun ProfileDonationsList(modifier: Modifier = Modifier) {
         ProfileDonation(
             imageResourceId = R.drawable.fusal,
             title = "La Manada de Pick",
-            category = "Animalista",
+            category = "Salud",
             amountDonated = 700.0,
             amountGoal = 1200.0,
             percentageReached = 65
@@ -60,7 +60,7 @@ fun ProfileDonationsList(modifier: Modifier = Modifier) {
         ProfileDonation(
             imageResourceId = R.drawable.fundeso,
             title = "La Manada de Pick",
-            category = "Animalista",
+            category = "Salud",
             amountDonated = 700.0,
             amountGoal = 1200.0,
             percentageReached = 65

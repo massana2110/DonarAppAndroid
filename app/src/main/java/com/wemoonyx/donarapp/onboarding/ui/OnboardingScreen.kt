@@ -43,7 +43,9 @@ data class OnboardingItem(
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun OnboardingScreen() {
+fun OnboardingScreen(
+    navigate: () -> Unit
+) {
     val onBoardingItems = listOf(
         OnboardingItem(
             title = "Encuentra tu causa",
@@ -66,7 +68,7 @@ fun OnboardingScreen() {
 
     Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.CenterEnd) {
         TextButton(
-            onClick = { /*TODO*/ }, colors = ButtonDefaults.textButtonColors(
+            onClick = { navigate() }, colors = ButtonDefaults.textButtonColors(
                 contentColor = BluePrimary
             )
         ) {
@@ -147,5 +149,5 @@ fun OnboardingPagerIndicator(pagerState: PagerState) {
 @Preview(showSystemUi = true)
 @Composable
 private fun OnboardingScreenPreview() {
-    OnboardingScreen()
+    OnboardingScreen {}
 }

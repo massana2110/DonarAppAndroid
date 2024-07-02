@@ -36,7 +36,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.wemoonyx.donarapp.R
+import com.wemoonyx.donarapp.main.ui.navigation.ScreenRoutes
 import com.wemoonyx.donarapp.ui.theme.BluePrimary
 import com.wemoonyx.donarapp.ui.theme.BlueTertiary
 import com.wemoonyx.donarapp.ui.theme.Gray10
@@ -47,7 +49,9 @@ import com.wemoonyx.donarapp.ui.theme.YellowPrimary
 import com.wemoonyx.donarapp.ui.theme.interFontFamily
 
 @Composable
-fun LoginScreen() {
+fun LoginScreen(
+    navController: NavHostController?
+) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -56,7 +60,9 @@ fun LoginScreen() {
     ) {
         LoginHeader()
         LoginDivider()
-        LoginForm()
+        LoginForm {
+            navController?.navigate(route = ScreenRoutes.MainNav.route)
+        }
     }
 }
 
@@ -149,7 +155,9 @@ fun LoginDivider() {
 }
 
 @Composable
-fun LoginForm() {
+fun LoginForm(
+    onLoginClick: () -> Unit
+) {
     var email by remember {
         mutableStateOf("")
     }
@@ -180,7 +188,7 @@ fun LoginForm() {
                 .padding(top = 12.dp)
         )
         Button(
-            onClick = { /*TODO*/ },
+            onClick = { onLoginClick() },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 16.dp),
@@ -325,5 +333,5 @@ fun LoginPasswordInput(password: String, onTextChanged: (String) -> Unit) {
 @Preview(showSystemUi = true)
 @Composable
 private fun LoginScreenPreview() {
-    LoginScreen()
+    LoginScreen(null)
 }

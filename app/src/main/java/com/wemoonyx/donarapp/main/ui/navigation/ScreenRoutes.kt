@@ -10,4 +10,8 @@ sealed class ScreenRoutes(val route: String) {
     data object HomeScreen: ScreenRoutes("home_screen")
     data object DonateScreen: ScreenRoutes("donate_screen")
     data object ProfileScreen: ScreenRoutes("profile_screen")
+
+    // Nav Graphs
+    data object MainNav: ScreenRoutes("main_nav")
+    data object AuthNav: ScreenRoutes("auth_nav")
 }

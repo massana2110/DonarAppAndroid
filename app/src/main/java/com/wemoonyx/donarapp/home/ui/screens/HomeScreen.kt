@@ -10,8 +10,8 @@ import com.wemoonyx.donarapp.home.ui.components.HomeContent
 import com.wemoonyx.donarapp.home.ui.components.HomeHeader
 
 @Composable
-fun HomeScreen() {
-    Column {
+fun HomeScreen(modifier: Modifier = Modifier) {
+    Column(modifier = modifier) {
         HomeHeader()
         HomeContent(Modifier.padding(16.dp))
     }
