@@ -81,6 +81,15 @@ data class ProjectItem(
     val contributors: Int,
 )
 
+val categoryItems = listOf(
+    CategoryItem(R.drawable.ic_dog, "Animalistas"),
+    CategoryItem(R.drawable.ic_person, "Humanitarias"),
+    CategoryItem(R.drawable.ic_plant, "Ambientales"),
+    CategoryItem(R.drawable.ic_health, "Salud"),
+    CategoryItem(R.drawable.ic_education, "Educación"),
+    CategoryItem(R.drawable.ic_adult, "Adulto mayor"),
+)
+
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HomeContent(modifier: Modifier) {
@@ -103,15 +112,6 @@ fun HomeContent(modifier: Modifier) {
             "Consultas \ndentales",
             "A través de su programa\nprimera infancia de FUSAL"
         ),
-    )
-
-    val categoryItems = listOf(
-        CategoryItem(R.drawable.ic_dog, "Animalistas"),
-        CategoryItem(R.drawable.ic_person, "Humanitarias"),
-        CategoryItem(R.drawable.ic_plant, "Ambientales"),
-        CategoryItem(R.drawable.ic_health, "Salud"),
-        CategoryItem(R.drawable.ic_education, "Educación"),
-        CategoryItem(R.drawable.ic_adult, "Adulto mayor"),
     )
 
     val projectItems = listOf(

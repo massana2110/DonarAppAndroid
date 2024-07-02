@@ -13,9 +13,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
@@ -45,10 +42,6 @@ private val listOptions = listOf(
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun MainScreen() {
-    var indexSelected by remember {
-        mutableIntStateOf(0)
-    }
-
     val navController = rememberNavController()
 
     Scaffold(
@@ -59,7 +52,7 @@ fun MainScreen() {
             NavigationBar(
                 containerColor = Color.White
             ) {
-                listOptions.forEachIndexed { index, bottomAppBarOption ->
+                listOptions.forEachIndexed { _, bottomAppBarOption ->
                     NavigationBarItem(
                         label = {
                             Text(

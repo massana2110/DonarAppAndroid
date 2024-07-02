@@ -63,7 +63,9 @@ fun MainNavGraph(
         route = ScreenRoutes.MainNav.route,
         startDestination = ScreenRoutes.HomeScreen.route
     ) {
-        composable(route = ScreenRoutes.HomeScreen.route) {
+        composable(
+            route = ScreenRoutes.HomeScreen.route,
+        ) {
             HomeScreen(modifier = Modifier.padding(paddingValues))
             SetStatusBarColor(
                 statusBarColor = MaterialTheme.colorScheme.primary,
@@ -71,14 +73,18 @@ fun MainNavGraph(
                 isDarkIcons = true
             )
         }
-        composable(route = ScreenRoutes.DonateScreen.route) {
+        composable(
+            route = ScreenRoutes.DonateScreen.route,
+        ) {
             DonateScreen(modifier = Modifier.padding(paddingValues))
             SetStatusBarColor(
                 statusBarColor = MaterialTheme.colorScheme.background,
                 navigationBarColor = null,
             )
         }
-        composable(route = ScreenRoutes.ProfileScreen.route) {
+        composable(
+            route = ScreenRoutes.ProfileScreen.route,
+        ) {
             ProfileScreen(modifier = Modifier.padding(paddingValues))
             SetStatusBarColor(
                 statusBarColor = MaterialTheme.colorScheme.background,

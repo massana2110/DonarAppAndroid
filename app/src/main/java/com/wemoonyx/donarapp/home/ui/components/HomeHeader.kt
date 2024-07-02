@@ -77,33 +77,41 @@ fun HomeHeader() {
                 painter = painterResource(id = R.drawable.photo_default),
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
-                modifier = Modifier.size(48.dp).clip(CircleShape)
+                modifier = Modifier
+                    .size(48.dp)
+                    .clip(CircleShape)
             )
         }
 
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(56.dp)
-                .padding(horizontal = 16.dp, vertical = 10.dp)
-                .clip(RoundedCornerShape(8.dp))
-                .background(Color(0xFFFAFAFA))
-                .clickable { /* TODO */  },
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Icon(
-                imageVector = Icons.Default.Search,
-                contentDescription = "Buscar",
-                Modifier.padding(start = 8.dp),
-                tint = LightGraySecondary
-            )
-            Text(
-                text = "Busca por nombre o tema de interes",
-                color = LightGraySecondary,
-                fontFamily = interFontFamily,
-                fontWeight = FontWeight.Normal
-            )
-        }
+        DonationSearchField(modifier = Modifier
+            .fillMaxWidth()
+            .height(56.dp)
+            .padding(horizontal = 16.dp, vertical = 10.dp)
+            .clip(RoundedCornerShape(8.dp))
+            .background(Color(0xFFFAFAFA))
+            .clickable { /* TODO */ }
+        )
+    }
+}
+
+@Composable
+fun DonationSearchField(modifier: Modifier = Modifier) {
+    Row(
+        modifier = modifier,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Icon(
+            imageVector = Icons.Default.Search,
+            contentDescription = "Buscar",
+            Modifier.padding(start = 8.dp),
+            tint = LightGraySecondary
+        )
+        Text(
+            text = "Busca por nombre o tema de interes",
+            color = LightGraySecondary,
+            fontFamily = interFontFamily,
+            fontWeight = FontWeight.Normal
+        )
     }
 }
 
