@@ -2,6 +2,7 @@ package com.wemoonyx.donarapp.donate.ui.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -11,11 +12,15 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Search
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -24,17 +29,24 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.wemoonyx.donarapp.donate.domain.models.DonationItemModel
+import com.wemoonyx.donarapp.donate.domain.models.listDonationOrganizations
 import com.wemoonyx.donarapp.home.ui.components.HomeCategories
 import com.wemoonyx.donarapp.home.ui.components.categoryItems
+import com.wemoonyx.donarapp.main.ui.components.DonarBadge
+import com.wemoonyx.donarapp.ui.theme.BluePrimary
 import com.wemoonyx.donarapp.ui.theme.GrayPrimary
+import com.wemoonyx.donarapp.ui.theme.GraySecondary
 import com.wemoonyx.donarapp.ui.theme.GrayTertiary
 import com.wemoonyx.donarapp.ui.theme.LightGraySecondary
 import com.wemoonyx.donarapp.ui.theme.interFontFamily
+
 
 @Composable
 fun DonateScreen(modifier: Modifier = Modifier) {
@@ -107,11 +119,12 @@ fun DonationList(modifier: Modifier = Modifier) {
         modifier = modifier
             .fillMaxSize()
             .padding(top = 16.dp),
-        contentPadding = PaddingValues(horizontal = 16.dp)
+        contentPadding = PaddingValues(horizontal = 16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         item {
             Text(
-                text = "Resultados de todo",
+                text = "Todos los resultados",
                 fontFamily = interFontFamily,
                 fontWeight = FontWeight.Medium,
                 color = GrayPrimary
@@ -124,6 +137,61 @@ fun DonationList(modifier: Modifier = Modifier) {
                 color = LightGraySecondary,
                 fontSize = 12.sp
             )
+        }
+        items(listDonationOrganizations, key = { it.id }) {
+            DonationItem(donationItem = it)
+        }
+    }
+}
+
+@Composable
+fun DonationItem(modifier: Modifier = Modifier, donationItem: DonationItemModel) {
+    Card(
+        modifier = modifier,
+        colors = CardDefaults.cardColors(containerColor = GraySecondary.copy(alpha = 0.2f)),
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Image(
+                painter = painterResource(id = donationItem.imgOrganization),
+                contentDescription = donationItem.name
+            )
+
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
+                    text = donationItem.name,
+                    fontFamily = interFontFamily,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 16.sp
+                )
+
+                DonarBadge(modifier = Modifier.padding(top = 4.dp), text = donationItem.category)
+
+                Text(
+                    modifier = Modifier.padding(top = 4.dp),
+                    text = donationItem.shortDescription,
+                    lineHeight = 14.sp,
+                    fontFamily = interFontFamily,
+                    fontSize = 12.sp
+                )
+
+                TextButton(
+                    onClick = { /*TODO*/ },
+                    contentPadding = PaddingValues(0.dp)
+                ) {
+                    Text(
+                        text = "Ver más",
+                        fontFamily = interFontFamily,
+                        color = BluePrimary,
+                        fontSize = 13.sp
+                    )
+                }
+            }
         }
     }
 }
