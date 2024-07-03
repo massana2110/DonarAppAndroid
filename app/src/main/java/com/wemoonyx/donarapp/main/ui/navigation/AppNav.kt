@@ -76,7 +76,7 @@ fun MainNavGraph(
         composable(
             route = ScreenRoutes.DonateScreen.route,
         ) {
-            DonateScreen(modifier = Modifier.padding(paddingValues))
+            DonateScreen(modifier = Modifier.padding(paddingValues), navHostController = navHostController)
             SetStatusBarColor(
                 statusBarColor = MaterialTheme.colorScheme.background,
                 navigationBarColor = null,

@@ -35,11 +35,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.wemoonyx.donarapp.donate.domain.models.DonationItemModel
 import com.wemoonyx.donarapp.donate.domain.models.listDonationOrganizations
 import com.wemoonyx.donarapp.home.ui.components.HomeCategories
 import com.wemoonyx.donarapp.home.ui.components.categoryItems
 import com.wemoonyx.donarapp.main.ui.components.DonarBadge
+import com.wemoonyx.donarapp.main.ui.navigation.ScreenRoutes
 import com.wemoonyx.donarapp.ui.theme.BluePrimary
 import com.wemoonyx.donarapp.ui.theme.GrayPrimary
 import com.wemoonyx.donarapp.ui.theme.GraySecondary
@@ -47,9 +51,8 @@ import com.wemoonyx.donarapp.ui.theme.GrayTertiary
 import com.wemoonyx.donarapp.ui.theme.LightGraySecondary
 import com.wemoonyx.donarapp.ui.theme.interFontFamily
 
-
 @Composable
-fun DonateScreen(modifier: Modifier = Modifier) {
+fun DonateScreen(navHostController: NavHostController, modifier: Modifier = Modifier) {
 
     var searchText by remember {
         mutableStateOf("")
@@ -61,7 +64,7 @@ fun DonateScreen(modifier: Modifier = Modifier) {
         }
 
         HomeCategories(categoryItems)
-        DonationList()
+        DonationList(navController = navHostController)
     }
 }
 
@@ -114,7 +117,7 @@ fun DonateSearch(
 }
 
 @Composable
-fun DonationList(modifier: Modifier = Modifier) {
+fun DonationList(modifier: Modifier = Modifier, navController: NavController) {
     LazyColumn(
         modifier = modifier
             .fillMaxSize()
@@ -139,13 +142,19 @@ fun DonationList(modifier: Modifier = Modifier) {
             )
         }
         items(listDonationOrganizations, key = { it.id }) {
-            DonationItem(donationItem = it)
+            DonationItem(donationItem = it) {
+                navController.navigate(ScreenRoutes.DonateNav.route)
+            }
         }
     }
 }
 
 @Composable
-fun DonationItem(modifier: Modifier = Modifier, donationItem: DonationItemModel) {
+fun DonationItem(
+    modifier: Modifier = Modifier,
+    donationItem: DonationItemModel,
+    onShowMoreClick: () -> Unit
+) {
     Card(
         modifier = modifier,
         colors = CardDefaults.cardColors(containerColor = GraySecondary.copy(alpha = 0.2f)),
@@ -181,7 +190,7 @@ fun DonationItem(modifier: Modifier = Modifier, donationItem: DonationItemModel)
                 )
 
                 TextButton(
-                    onClick = { /*TODO*/ },
+                    onClick = { onShowMoreClick() },
                     contentPadding = PaddingValues(0.dp)
                 ) {
                     Text(
@@ -199,5 +208,5 @@ fun DonationItem(modifier: Modifier = Modifier, donationItem: DonationItemModel)
 @Preview(showSystemUi = true)
 @Composable
 private fun DonateScreenPreview() {
-    DonateScreen()
+    DonateScreen(rememberNavController())
 }

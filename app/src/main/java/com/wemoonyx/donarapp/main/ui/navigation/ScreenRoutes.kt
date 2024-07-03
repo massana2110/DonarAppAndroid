@@ -11,7 +11,11 @@ sealed class ScreenRoutes(val route: String) {
     data object DonateScreen: ScreenRoutes("donate_screen")
     data object ProfileScreen: ScreenRoutes("profile_screen")
 
+    // Donation nav routes
+    data object DonateDetailScreen: ScreenRoutes("donate_detail_screen")
+
     // Nav Graphs
     data object MainNav: ScreenRoutes("main_nav")
     data object AuthNav: ScreenRoutes("auth_nav")
+    data object DonateNav: ScreenRoutes("donate_nav")
 }
